@@ -7,7 +7,7 @@ const Container = styled.div`
   padding: 8px;
   borderr-adius: 2px;
   margin-bottom: 8px;
-  background-color: white;
+  background-color: ${props => (props.isDragging ? 'lightgreen' : 'white')};
 `
 
 export default class Task extends React.Component {
@@ -16,12 +16,13 @@ export default class Task extends React.Component {
 
     return (
       <Draggable draggableId={this.props.task.id} index={this.props.index}>
-        {(provided) => (
+        {(provided, snapshot) => (
           <Container
             {...provided.draggableProps}
             {...provided.dragHandleProps}
             // innerRef={provided.innerRef}     // deprecated >> replaced with 'ref'
             ref={provided.innerRef}
+            isDragging={snapshot.isDragging}    // for STYLING
           >
             {this.props.task.content}
           </Container>
@@ -30,3 +31,15 @@ export default class Task extends React.Component {
     )
   }
 }
+
+// ------------------- 'Snapshot' examples -------------------
+
+// const draggableSnapshot = {
+//   isDragging: true,
+//   draggingOver: 'column-1'
+// }
+
+// const droppableSnapshot = {
+//   isDraggingOver: true,
+//   draggingOverWith: 'task-1'
+// }
