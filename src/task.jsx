@@ -8,6 +8,16 @@ const Container = styled.div`
   border-radius: 2px;
   margin-bottom: 8px;
   background-color: ${props => (props.isDragging ? 'lightgreen' : 'white')};
+  
+  display: flex;
+`
+
+const Handle = styled.div`
+  width: 20px;
+  height: 20px;
+  background-color: orange;
+  border-radius: 4px;
+  margin-right: 8px;
 `
 
 export default class Task extends React.Component {
@@ -19,11 +29,18 @@ export default class Task extends React.Component {
         {(provided, snapshot) => (
           <Container
             {...provided.draggableProps}
-            {...provided.dragHandleProps}
+            
+            // {...provided.dragHandleProps}     // ***** if we want a SPECIFIC area for dragging >> move this prop down into <Handle /> 
+              // if we do not move this^ prop OUT of the <Container /> then the entire task remains draggable (versus a specific <Handle />)
+
+
             // innerRef={provided.innerRef}     // deprecated >> replaced with 'ref'
+            
             ref={provided.innerRef}
-            isDragging={snapshot.isDragging}    // for STYLING
+            
+            isDragging={snapshot.isDragging}    // for STYLING during dragging 
           >
+            <Handle {...provided.dragHandleProps}/>
             {this.props.task.content}
           </Container>
         )}

@@ -30,12 +30,11 @@ export default class Column extends React.Component {
               // innerRef={provided.innerRef}       // deprecated >> replaced with 'ref'
               ref={provided.innerRef}
               {...provided.droppableProps}
-              isDraggingOver={snapshot.isDraggingOver} // for STYLING
+              
+              isDraggingOver={snapshot.isDraggingOver} // for STYLING during dragging
             >
               {this.props.tasks.map((task, index) => <Task key={task.id} task={task} index={index} />)}
-              
               {provided.placeholder}
-
             </TaskList>
 
           )}
