@@ -24,8 +24,8 @@ export default class Column extends React.Component {
       <Container>
         <Title>{this.props.column.title}</Title>
 
-        <Droppable droppableId={this.props.column.id}>
-          {(provided, snapshot) => (
+        <Droppable droppableId={this.props.column.id}> 
+          {(provided, snapshot) => ( // droppable expects a FUNCTION that returns a React Component (<TaskList>)
             <TaskList
               // innerRef={provided.innerRef}       // deprecated >> replaced with 'ref'
               ref={provided.innerRef}
@@ -33,7 +33,9 @@ export default class Column extends React.Component {
               isDraggingOver={snapshot.isDraggingOver} // for STYLING
             >
               {this.props.tasks.map((task, index) => <Task key={task.id} task={task} index={index} />)}
+              
               {provided.placeholder}
+
             </TaskList>
 
           )}

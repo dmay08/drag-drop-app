@@ -7,6 +7,7 @@ import { DragDropContext } from 'react-beautiful-dnd'
 class App extends React.Component {
   state = initialData
 
+  // 'onDragEnd' === only callback necessary for <DragDropContext (2 others - onDragUpdate, onDragStart)
   onDragEnd = result => {
     const { destination, source, draggableId } = result
     if (!destination) return
@@ -23,7 +24,7 @@ class App extends React.Component {
     // Move taskId from OLD idx to NEW idx in arr
     newTaskIds.splice(source.index, 1) // From starting index, remove 1 item
     newTaskIds.splice(destination.index, 0, draggableId) // From destination index, remove nothing, insert draggableId (taskId)
-  
+
     const newColumn = {
       ...column, // id, title
       taskIds: newTaskIds // New array with the 'dragged' rearrangement 
@@ -32,8 +33,8 @@ class App extends React.Component {
     const newState = {
       ...this.state,
       columns: {
-        ...this.state.columns,
-        [newColumn.id]: newColumn // Overrides existing column (if there was another column dragged into -- good practice regardless)
+        ...this.state.columns, // unnecessary b/c we only have 1 column, but good practice 
+        [newColumn.id]: newColumn // Overrides existing column 
       }
     }
 
@@ -42,7 +43,9 @@ class App extends React.Component {
 
   render() {
     return (
-      <DragDropContext onDragEnd={this.onDragEnd}>
+      <DragDropContext
+        onDragEnd={this.onDragEnd}
+      >
         {this.state.columnOrder.map((columnId) => {
           const column = this.state.columns[columnId]
           const tasks = column.taskIds.map(taskId => this.state.tasks[taskId])
