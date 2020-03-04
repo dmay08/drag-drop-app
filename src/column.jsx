@@ -7,14 +7,22 @@ const Container = styled.div`
   margin: 8px;
   border: 1px solid lightgrey;
   border-radius: 2px;
+  width: 220px;
+
+  display: flex;
+  flex-direction: column;
 `
 const Title = styled.h3`
   padding: 8px;
+  text-align: center;
 `
 const TaskList = styled.div`
   padding: 8px;
   background-color: ${props => (props.isDraggingOver ? 'skyblue' : 'white')};
   transition: background-color 0.2s ease;
+  
+  flex-grow: 1;          // fills up entire <Container> space >>> so the coloring on drag shows up in the entire div
+  min-height: 100px;
 `
 
 
