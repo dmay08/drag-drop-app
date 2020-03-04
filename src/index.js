@@ -19,14 +19,14 @@ class App extends React.Component {
   // added 2nd
   onDragStart = () => {
     // document.body.style.color = 'orange'
-    document.body.style.transition = 'background-color 0.2s ease'
+    // document.body.style.transition = 'background-color 0.2s ease'
   }
 
   // added 3rd
   onDragUpdate = update => {
-    const { destination } = update
-    const opacity = destination ? destination.index / Object.keys(this.state.tasks).length : 0
-    document.body.style.backgroundColor = `rgba(153, 141, 217, ${opacity})`
+    // const { destination } = update
+    // const opacity = destination ? destination.index / Object.keys(this.state.tasks).length : 0
+    // document.body.style.backgroundColor = `rgba(153, 141, 217, ${opacity})`
   }
 
   // added 1st >>> 'onDragEnd' === only callback necessary for <DragDropContext (2 others - onDragUpdate, onDragStart)
