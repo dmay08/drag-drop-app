@@ -5,9 +5,12 @@ import Column from './column'
 import { DragDropContext } from 'react-beautiful-dnd'
 import styled from 'styled-components'
 
-const Container = styled.div`
+const ColumnContainer = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
+  width: 100vw;
+  margin-bottom: 50px;
 `
 
 class App extends React.Component {
@@ -15,7 +18,7 @@ class App extends React.Component {
 
   // added 2nd
   onDragStart = () => {
-    document.body.style.color = 'orange'
+    // document.body.style.color = 'orange'
     document.body.style.transition = 'background-color 0.2s ease'
   }
 
@@ -50,23 +53,23 @@ class App extends React.Component {
 
 
 
-    
+
 
     // =============================== Moving WITHIN a SINGLE column ==============================
 
     if (start === finish) { // aka stayed in 1 column >>> just move previous logic (when we had 1 column) up into this conditional
       const newTaskIds = Array.from(start.taskIds) // changed from (column.taskIds) >> (start.taskIds)
-  
+
       // Move taskId from OLD idx to NEW idx in arr
       newTaskIds.splice(source.index, 1) // From starting index, remove 1 item
       newTaskIds.splice(destination.index, 0, draggableId) // From destination index, remove nothing, insert draggableId (taskId)
-  
+
       const newColumn = {
         // ...column,       // id, title
         ...start, // changed from '...column' >> AFTER adding more columns (and 'start' and 'finish' to replace single 'column')
         taskIds: newTaskIds // New array with the 'dragged' rearrangement 
       }
-  
+
       const newState = {
         ...this.state,
         columns: {
@@ -86,17 +89,17 @@ class App extends React.Component {
 
     // --------------------------------------  'Start' column --------------------------------------------
     const startTaskIds = Array.from(start.taskIds)
-    startTaskIds.splice(source.index, 1) 
-    
+    startTaskIds.splice(source.index, 1)
+
     const newStart = {
       ...start,
       taskIds: startTaskIds
     }
-    
+
     // --------------------------------------  'Finish' column --------------------------------------------
     const finishTaskIds = Array.from(finish.taskIds)
     finishTaskIds.splice(destination.index, 0, draggableId)
-    
+
     const newFinish = {
       ...finish,
       taskIds: finishTaskIds
@@ -128,14 +131,17 @@ class App extends React.Component {
         onDragStart={this.onDragStart}
 
       >
-        <Container>
-          {this.state.columnOrder.map((columnId) => {
-            const column = this.state.columns[columnId]
-            const tasks = column.taskIds.map(taskId => this.state.tasks[taskId])
+        {this.state.columnOrder.map((columnId) => {
+          const column = this.state.columns[columnId]
+          const tasks = column.taskIds.map(taskId => this.state.tasks[taskId])
 
-            return <Column key={column.id} column={column} tasks={tasks} />
-          })}
-        </Container>
+          return (
+            <ColumnContainer column={column} key={column.id} >
+              <Column column={column} tasks={tasks} />
+
+            </ColumnContainer>
+          )
+        })}
       </DragDropContext>
     )
   }

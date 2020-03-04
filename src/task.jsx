@@ -3,13 +3,12 @@ import styled from 'styled-components'
 import { Draggable } from 'react-beautiful-dnd'
 
 const Container = styled.div`
+  display: flex;
   border: 1px solid lightgrey;
   padding: 8px;
   border-radius: 2px;
   margin-bottom: 8px;
-  background-color: ${props => (props.isDragging ? 'lightgreen' : 'white')};
-  
-  display: flex;
+  background-color: ${props => (props.isDragging ? 'lightgrey' : 'white')};
 `
 
 const Handle = styled.div`
@@ -29,7 +28,7 @@ export default class Task extends React.Component {
         {(provided, snapshot) => (
           <Container
             {...provided.draggableProps}
-            
+
             // {...provided.dragHandleProps}     // ***** if we want a SPECIFIC area for dragging >> move this prop down into <Handle /> 
               // if we do not move this^ prop OUT of the <Container /> then the entire task remains draggable (versus a specific <Handle />)
 
