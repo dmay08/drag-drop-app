@@ -41,12 +41,20 @@ class App extends React.Component {
       destination.index === source.index
     ) return
 
-    //--------- AFTER adding more columns >> replace 'const column' with 'start' and 'stop' -------
+    //--------- AFTER adding more columns >> replace 'const column' with 'start' and 'finish' -------
     // const column = this.state.columns[source.droppableId]     // this worked with only 1 column
     const start = this.state.columns[source.droppableId]
     const finish = this.state.columns[destination.droppableId]
-    
+
     // >>>> now move all logic below into a NEW CONDITIONAL (now that we have multiple columns)
+
+
+
+
+    
+
+    // =============================== Moving WITHIN a SINGLE column ==============================
+
     if (start === finish) { // aka stayed in 1 column >>> just move previous logic (when we had 1 column) up into this conditional
       const newTaskIds = Array.from(start.taskIds) // changed from (column.taskIds) >> (start.taskIds)
   
@@ -63,14 +71,52 @@ class App extends React.Component {
       const newState = {
         ...this.state,
         columns: {
-          ...this.state.columns, // unnecessary b/c we only have 1 column, but good practice 
+          ...this.state.columns, // unnecessary AT FIRST (but good practice) b/c we only had 1 column >> then we added 2 more
           [newColumn.id]: newColumn // Overrides existing column 
         }
       }
-  
       this.setState(newState)
-
+      return
     }
+
+
+
+
+
+    // =============================== Moving from 1 column >>> to another ==============================
+
+    // --------------------------------------  'Start' column --------------------------------------------
+    const startTaskIds = Array.from(start.taskIds)
+    startTaskIds.splice(source.index, 1) 
+    
+    const newStart = {
+      ...start,
+      taskIds: startTaskIds
+    }
+    
+    // --------------------------------------  'Finish' column --------------------------------------------
+    const finishTaskIds = Array.from(finish.taskIds)
+    finishTaskIds.splice(destination.index, 0, draggableId)
+    
+    const newFinish = {
+      ...finish,
+      taskIds: finishTaskIds
+    }
+
+    // ---------------------------  newState (for MULTI-column movement) ---------------------------------
+    const newState = {
+      ...this.state,
+      columns: {
+        ...this.state.columns,
+        [newStart.id]: newStart,
+        [newFinish.id]: newFinish
+      }
+    }
+
+    this.setState(newState)
+    return
+
+
 
   }
 
