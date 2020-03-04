@@ -9,7 +9,7 @@ const initialData = {
     'column-1': {
       id: 'column-1',
       title: 'To do',
-      taskIds: ['task-1', 'task-2', 'task-3', 'task-4'] // order of tasks within the column
+      taskIds: [] 
     },
     'column-2': {
       id: 'column-2',
@@ -18,8 +18,8 @@ const initialData = {
     },
     'column-3': {
       id: 'column-3',
-      title: 'Done',
-      taskIds: [] 
+      title: '',
+      taskIds: ['task-1', 'task-2', 'task-3', 'task-4'] 
     }
   },
   // Facilitate reordering of the columns
